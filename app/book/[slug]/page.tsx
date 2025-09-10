@@ -97,7 +97,7 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
   };
 
   if (!salonData) {
-    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
+    return (<div className="min-h-screen flex items-center justify-center">Carregando...</div>);
   }
 
   return (
@@ -110,14 +110,12 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
               <ArrowLeft className="w-5 h-5" />
               <span>Voltar</span>
             </Link>
-            
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-agendapro-primary to-agendapro-secondary rounded-lg flex items-center justify-center">
                 <CalendarIcon className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold gradient-text">AgendaPro</span>
             </div>
-            
             <div className="w-20" /> {/* Spacer */}
           </div>
         </div>
