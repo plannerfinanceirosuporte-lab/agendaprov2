@@ -163,7 +163,7 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
 
   addAppointment: async (appointment) => {
     try {
-
+      if (!supabase) throw new Error('Supabase not configured');
       const { data, error } = await supabase
         .from('appointments')
         .insert([{
@@ -200,7 +200,7 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
 
   updateAppointment: async (id, updates) => {
     try {
-
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('appointments')
         .update(updates)
