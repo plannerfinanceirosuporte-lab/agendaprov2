@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -95,7 +96,6 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
     // Aqui seria feita a integração com a API
     setStep(5);
   };
-
   if (!salonData) {
     return (<div className="min-h-screen flex items-center justify-center">Carregando...</div>);
   }
@@ -170,29 +170,28 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
                 ) : (
                   <div className="space-y-4">
                     {services.map((service) => (
-                    <div
-                      key={service.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:border-agendapro-primary hover:shadow-md transition-all duration-300 cursor-pointer"
-                      onClick={() => handleServiceSelect(parseInt(service.id))}
-                    >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900">{service.name}</h3>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {service.duration} min • {service.professional_name}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-agendapro-primary">
-                            R$ {service.price.toFixed(2)}
+                      <div
+                        key={service.id}
+                        className="border border-gray-200 rounded-lg p-4 hover:border-agendapro-primary hover:shadow-md transition-all duration-300 cursor-pointer"
+                        onClick={() => handleServiceSelect(parseInt(service.id))}
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900">{service.name}</h3>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {service.duration} min • {service.professional_name}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-lg font-bold text-agendapro-primary">
+                              R$ {service.price.toFixed(2)}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                   </div>
                 )}
-                </div>
               </Card>
             )}
 
