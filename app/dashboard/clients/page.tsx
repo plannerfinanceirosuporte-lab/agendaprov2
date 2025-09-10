@@ -202,17 +202,14 @@ export default function ClientsPage() {
   );
 }
 
-function ClientModal({ 
-  isOpen, 
-  onClose, 
-  client, 
-  onSave 
-}: { 
-  isOpen: boolean; 
+interface ClientModalProps {
+  isOpen: boolean;
   onClose: () => void;
   client?: any;
-  onSave: (id: string, data: any) => Promise<void>;
-}) {
+  onSave: ((id: string, data: any) => Promise<void>) | ((client: Omit<any, 'id'>) => Promise<void>);
+}
+
+function ClientModal({ isOpen, onClose, client, onSave }: ClientModalProps) {
   const [formData, setFormData] = useState({
     name: client?.name || '',
     email: client?.email || '',
@@ -227,7 +224,6 @@ function ClientModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
       const clientData = {
         name: formData.name,
@@ -235,15 +231,15 @@ function ClientModal({
         phone: formData.phone,
         whatsapp: formData.whatsapp || formData.phone,
         loyalty_points: parseInt(formData.loyalty_points.toString()),
-        total_visits: parseInt(formData.total_visits.toString())
+        total_visits: parseInt(formData.total_visits?.toString() || '0'),
       };
-
       if (client) {
-        await onSave(client.id, clientData);
+        // updateClient: (id, updates)
+        await (onSave as (id: string, data: any) => Promise<void>)(client.id, clientData);
       } else {
-        await onSave('', clientData);
+        // addClient: (clientData)
+        await (onSave as (client: Omit<any, 'id'>) => Promise<void>)(clientData);
       }
-
       onClose();
     } catch (error) {
       console.error('Erro ao salvar cliente:', error);
