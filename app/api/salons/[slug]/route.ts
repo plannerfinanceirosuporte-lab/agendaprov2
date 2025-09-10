@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { salonService, serviceService } from '@/lib/supabase';
 
-export async function GET(request: NextRequest, context: { params: { slug: string } }) {
+export async function GET(request: NextRequest, context: any) {
   const { params } = context;
   try {
     const salon = await salonService.getBySlug(params.slug);
