@@ -24,7 +24,8 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useServiceStore } from '@/lib/store';
 
-export default function BookingPage({ params }: { params: { slug: string } }) {
+export default function BookingPage(props: any) {
+  const { params } = props;
   const { services, fetchServices, isLoading } = useServiceStore();
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [selectedProfessional, setSelectedProfessional] = useState<string | null>(null);
