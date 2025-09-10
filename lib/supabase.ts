@@ -82,35 +82,35 @@ export interface Appointment {
 // Database functions
 export const salonService = {
   async create(salon: Omit<Salon, 'id' | 'created_at' | 'updated_at'>) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('salons')
       .insert([salon])
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   },
 
   async getBySlug(slug: string) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('salons')
       .select('*')
       .eq('slug', slug)
       .single();
-    
     if (error) throw error;
     return data;
   },
 
   async update(id: string, updates: Partial<Salon>) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('salons')
       .update(updates)
       .eq('id', id)
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   }
@@ -118,6 +118,7 @@ export const salonService = {
 
 export const serviceService = {
   async getBySalon(salonId: string) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('services')
       .select(`
@@ -125,18 +126,17 @@ export const serviceService = {
         professional:professionals(name)
       `)
       .eq('salon_id', salonId);
-    
     if (error) throw error;
     return data;
   },
 
   async create(service: Omit<Service, 'id' | 'created_at' | 'updated_at'>) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('services')
       .insert([service])
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   }
@@ -144,17 +144,18 @@ export const serviceService = {
 
 export const appointmentService = {
   async create(appointment: Omit<Appointment, 'id' | 'created_at' | 'updated_at'>) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('appointments')
       .insert([appointment])
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   },
 
   async getBySalon(salonId: string, date?: string) {
+    if (!supabase) throw new Error('Supabase not configured');
     let query = supabase
       .from('appointments')
       .select(`
@@ -170,19 +171,18 @@ export const appointmentService = {
     }
 
     const { data, error } = await query.order('time');
-    
     if (error) throw error;
     return data;
   },
 
   async updateStatus(id: string, status: Appointment['status']) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('appointments')
       .update({ status })
       .eq('id', id)
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   }
@@ -190,23 +190,23 @@ export const appointmentService = {
 
 export const clientService = {
   async create(client: Omit<Client, 'id' | 'created_at' | 'updated_at'>) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('clients')
       .insert([client])
       .select()
       .single();
-    
     if (error) throw error;
     return data;
   },
 
   async getByPhone(phone: string) {
+    if (!supabase) throw new Error('Supabase not configured');
     const { data, error } = await supabase
       .from('clients')
       .select('*')
       .eq('phone', phone)
       .single();
-    
     if (error && error.code !== 'PGRST116') throw error;
     return data;
   }
