@@ -220,7 +220,7 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
 
   deleteAppointment: async (id) => {
     try {
-
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('appointments')
         .delete()
