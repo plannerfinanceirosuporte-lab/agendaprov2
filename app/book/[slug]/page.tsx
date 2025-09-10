@@ -424,7 +424,7 @@ export default function BookingPage({ params }: { params: { slug: string } }) {
                       {selectedServiceData.name}
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      {selectedServiceData.duration} min • {selectedServiceData.professional}
+                      {selectedServiceData.duration} min • Profissional: {selectedServiceData.professional_id}
                     </div>
                     <div className="text-lg font-bold text-agendapro-primary">
                       R$ {selectedServiceData.price.toFixed(2)}
