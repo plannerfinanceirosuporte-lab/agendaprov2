@@ -112,7 +112,7 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
     set({ isLoading: true });
     try {
       // Check if Supabase is configured
-      if (!isSupabaseConfigured()) {
+      if (!isSupabaseConfigured() || !supabase) {
         console.warn('Supabase not configured, using mock data');
         set({ appointments: [], isLoading: false });
         return;
@@ -258,7 +258,7 @@ export const useServiceStore = create<ServiceStore>((set) => ({
     set({ isLoading: true });
     try {
       // Check if Supabase is configured
-      if (!isSupabaseConfigured()) {
+      if (!isSupabaseConfigured() || !supabase) {
         console.warn('Supabase not configured, using mock data');
         set({ services: [], isLoading: false });
         return;
@@ -310,6 +310,7 @@ export const useServiceStore = create<ServiceStore>((set) => ({
         throw new Error('Profissional é obrigatório');
       }
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { data, error } = await supabase
         .from('services')
         .insert([{
@@ -359,9 +360,10 @@ export const useServiceStore = create<ServiceStore>((set) => ({
         cleanUpdates.name = cleanUpdates.name.trim();
       }
       if (cleanUpdates.category === '') {
-        cleanUpdates.category = null;
+        (cleanUpdates as any).category = null;
       }
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('services')
         .update(cleanUpdates)
@@ -382,6 +384,7 @@ export const useServiceStore = create<ServiceStore>((set) => ({
   deleteService: async (id) => {
     try {
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('services')
         .delete()
@@ -407,7 +410,7 @@ export const useClientStore = create<ClientStore>((set, get) => ({
     set({ isLoading: true });
     try {
       // Check if Supabase is configured
-      if (!isSupabaseConfigured()) {
+      if (!isSupabaseConfigured() || !supabase) {
         console.warn('Supabase not configured, using mock data');
         set({ clients: [], isLoading: false });
         return;
@@ -441,6 +444,7 @@ export const useClientStore = create<ClientStore>((set, get) => ({
   addClient: async (client) => {
     try {
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { data, error } = await supabase
         .from('clients')
         .insert([client])
@@ -465,6 +469,7 @@ export const useClientStore = create<ClientStore>((set, get) => ({
   updateClient: async (id, updates) => {
     try {
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('clients')
         .update(updates)
@@ -485,6 +490,7 @@ export const useClientStore = create<ClientStore>((set, get) => ({
   deleteClient: async (id) => {
     try {
 
+      if (!supabase) throw new Error('Supabase not configured');
       const { error } = await supabase
         .from('clients')
         .delete()
